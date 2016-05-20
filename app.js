@@ -1,13 +1,15 @@
 var Twit = require('twit');
+var Wolfram = require('node-wolfram');
 var Retweet = require('./retweet');
 var Reply = require('./reply');
 var config = require('./config');
 
 var T = new Twit(config);
+var W = new Wolfram(config.wolfram_appid);
 
 // Twit has promise support; you can use the callback API,
 // promise API, or both at the same time. We'll wait until we can successfully auth our app, then store our username on the T object.
-//
+
 T.get('account/verify_credentials', { skip_status: true })
   .catch(function (err) {
     console.log('caught error', err.stack)
@@ -54,3 +56,4 @@ T.get('account/verify_credentials', { skip_status: true })
 
 //Making this variable accessible to our other libraries
 exports.T = T;
+exports.W = W;
