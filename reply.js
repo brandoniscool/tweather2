@@ -10,7 +10,7 @@ exports.tweetEvent = function (eventMsg) {
   var from = eventMsg.user.screen_name;
 
   var tweetWithWeather = '@' + from + " ";
-//  if (from == app.T.screen_name) {
+  if (from != app.T.screen_name) { //Don't reply to yourself!
     if (concerningWeather(text)) {
       if (replyto === app.T.screen_name) {
         getWeather(text, from, function(status){
@@ -20,7 +20,7 @@ exports.tweetEvent = function (eventMsg) {
     } else {
       deferredTweet(from);
     }
-  //}
+  }
 }
 
 function deferredTweet(from) {

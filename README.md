@@ -2,7 +2,7 @@
 
 # Tweather 2.0
 
-This Twitter bot is alive! It intelligently responds to @mentions with weather related information and selectively retweets interesting things from promising weather related accounts. Try things like: "What's the weather in London?" or "When will the sun set in San Francisco today?"
+This Twitter bot is alive! It intelligently responds to @mentions with weather related information and selectively retweets interesting things from popular weather related accounts. Try things like: "What's the weather in London?" or "When will the sun set in San Francisco today?"
 
 <img style="display:block;margin:0 auto;"src="http://i.imgur.com/ACxHvhk.jpg" width="400px"/>
 
