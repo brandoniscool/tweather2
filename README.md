@@ -1,11 +1,11 @@
-<a name="README"><img src="http://i.imgur.com/YPzY3Cn.png" heigth="300px" width="675px"/></a>
+<a name="README"><img src="http://i.imgur.com/ACxHvhk.jpg" width="600px"/></a>
 
 
 # Tweather 2.0
 
-This Twitter bot responds to @mentions with weather forecast data from [OpenWeatherMap](http://openweathermap.org) and selectively retweets interesting tweets from promising weather related accounts. Tweet your zipcode to [@tweathertwo](https://twitter.com/tweathertwo) to try.
+This Twitter bot responds to @mentions with weather forecast data from [OpenWeatherMap](http://openweathermap.org) and selectively retweets interesting tweets from promising weather related accounts. Tweet a valid US zipcode to [@tweathertwo](https://twitter.com/tweathertwo) to try.
 
-<img src="http://i.imgur.com/JCYBCdU.jpg" width="400px"/>
+<img style="display:block;margin:0 auto;"src="http://i.imgur.com/JCYBCdU.jpg" width="400px"/>
 
 ------------------------------------------------
 
