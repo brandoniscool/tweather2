@@ -2,13 +2,14 @@ var app = require('./app');
 var config = require('./config');
 var request = require('request');
 
+//This is our array of twitter accounts that we're randomly sampling from.
 var weatherAccounts = ['weatherchannel', 'twcbreaking', 'NWSNHC', 'nws', 'wunderground', 'JimCantore', 'CNNweather'];
 
 exports.sampleAccounts = function() {
   var len = weatherAccounts.length;
   var userObj = {
-    screen_name: weatherAccounts[Math.floor(Math.random()*len)],
-    count: 1
+    screen_name: weatherAccounts[Math.floor(Math.random()*len)], //choosing random index
+    count: 1 //we only need one tweet
   }
   return userObj;
 }
