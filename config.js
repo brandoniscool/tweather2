@@ -1,3 +1,7 @@
+/*
+These keys are sample only and will not work for you. Follow the instructions on the homepage to generate proper values.
+*/
+
 module.exports = {
   openweathermap_API_KEY: '650fdd4b816687a6f9ceb8d473b886c7',
   consumer_key: '94UAIkZiH0RuLgGZc9Db4PoLr',
