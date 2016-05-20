@@ -1,4 +1,4 @@
-<a name="README"><img src="http://i.imgur.com/YPzY3Cn.png" width="600px"/></a>
+<a name="README"><img src="http://i.imgur.com/9lwLaNY.jpg" width="700px"/></a>
 
 # Tweather 2.0
 
