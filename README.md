@@ -21,7 +21,7 @@ This Twitter bot is alive! It intelligently responds to @mentions with weather r
 
 Create a [Twitter Application](https://apps.twitter.com) and generate application keys.
 
-Create an [Wolfram Alpha account](http://products.wolframalpha.com/api/ and generate an API Key.
+Create an [Wolfram Alpha account](http://products.wolframalpha.com/api/) and generate an API Key.
 
 You will have to update `config.js` with the keys obtained from Twitter Dev and OpenWeatherMap.
 
