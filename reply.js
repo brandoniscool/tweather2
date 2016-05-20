@@ -7,31 +7,31 @@ var W = new Wolfram(config.wolfram_appid);
 exports.tweetEvent = function (eventMsg) {
   var replyto = eventMsg.in_reply_to_screen_name;
   var text = eventMsg.text.replace(/@[\S]*/g, '').replace(/^\s+|\s+$/g, ''); //removing the @mention for wolfram query and stripping excess whitespace
-  var from = eventMsg.user.screen_name;
+  var username = eventMsg.user.screen_name;
 
-  var tweetWithWeather = '@' + from + " ";
-  if (from != app.T.screen_name) { //Don't reply to yourself!
+  var tweetWithWeather = '@' + username + " ";
+//  if (from == app.T.screen_name) {
     if (concerningWeather(text)) {
       if (replyto === app.T.screen_name) {
-        getWeather(text, from, function(status){
+        getWeather(text, username, function(status){
           sendTweet(tweetWithWeather + status);
         });
       }
     } else {
-      deferredTweet(from);
+      deferredTweet(username);
     }
-  }
+  //}
 }
 
-function deferredTweet(from) {
+function deferredTweet(username) {
   var cities = config.majorcities;
   var len = cities.length;
   var city = cities[Math.floor(Math.random()*len)];
-  var defer = '@' + from + ' thanks, but this tweet doesn\'t seem to concern weather. Try something like: \"What\'s the weather in ' + city + '?\"';
+  var defer = '@' + username + ' thanks, but this tweet doesn\'t seem to concern weather. Try something like: \"What\'s the weather in ' + city + '?\"';
   sendTweet(defer);
 }
 
-function getWeather(query, from, callback) {
+function getWeather(query, username, callback) {
   console.log(query);
   W.query(query, function(err, result) {
   	if(err) {
@@ -42,7 +42,7 @@ function getWeather(query, from, callback) {
         var status = wolframParser(str);
         callback(status);
       } else {
-        deferredTweet(from);
+        deferredTweet(username);
         return
       }
     }

@@ -1,6 +1,7 @@
 var Twit = require('twit');
 var Wolfram = require('node-wolfram');
 var Retweet = require('./retweet');
+var Mention = require('./mention');
 var Reply = require('./reply');
 var config = require('./config');
 
@@ -29,7 +30,13 @@ T.get('account/verify_credentials', { skip_status: true })
       T.get('statuses/user_timeline', Retweet.sampleAccounts(), function(err, data, response) {
         Retweet.postRetweet(data[0].id_str);
       });
-    }, 1000*180); //This line determines interval time, in miliseconds.
+    }, 100000*180); //This line determines interval time, in miliseconds.
+
+    setInterval(function () {
+      T.get('search/tweets', {q: 'weather', count: 1}, function(err, data, response) {
+        Mention.tweetMention(data.statuses[0].user.screen_name);
+      });
+    }, 100000*200); //This line determines interval time, in miliseconds.
 
     // Opening up streaming connection to Twitter
     // dev.twitter.com/streaming/overview
