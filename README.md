@@ -2,7 +2,7 @@
 
 # Tweather 2.0
 
-This Twitter bot responds to @mentions with weather forecast data from [OpenWeatherMap](http://openweathermap.org) and selectively retweets interesting tweets from promising weather related accounts. Tweet a valid US zipcode to [@tweathertwo](https://twitter.com/tweathertwo) to try.
+This Twitter bot is alive! It intelligently responds to @mentions with weather related information and selectively retweets interesting things from promising weather related accounts. Try things like: "What's the weather in London?" or "When will the sun set in San Francisco today?"
 
 <img style="display:block;margin:0 auto;"src="http://i.imgur.com/ACxHvhk.jpg" width="400px"/>
 
@@ -21,7 +21,7 @@ This Twitter bot responds to @mentions with weather forecast data from [OpenWeat
 
 Create a [Twitter Application](https://apps.twitter.com) and generate application keys.
 
-Create an [OpenWeatherMap account](https://openweathermap.org) and generate an API Key.
+Create an [Wolfram Alpha account](http://products.wolframalpha.com/api/ and generate an API Key.
 
 You will have to update `config.js` with the keys obtained from Twitter Dev and OpenWeatherMap.
 
@@ -51,7 +51,7 @@ npm start
 ##Resources
 
 - Twitter Developers - https://dev.twitter.com/
-- OpenWeatherMap API Docs - http://openweathermap.org/current
+- Wolfram API Docs - http://products.wolframalpha.com/api/documentation.html
 - Node.js official documentation - https://nodejs.org/api/
 - Node NPM Package Manager - https://www.npmjs.com/
 - Getting Started with Amazon EC2 Linux Instances - http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html
