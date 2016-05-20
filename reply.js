@@ -71,7 +71,7 @@ function wolframParser(str) {
 
 function concerningWeather(str) {
   //return str.match(/weather|forecast|tempurature|rain|snow|sunny/gi);
-  return str.match(/weather|forecast|tempurature|rain|snow|sunny/gi);
+  return str.match(/weather|forecast|temperature|rain|snow|sunny/gi);
 }
 
 function sendTweet(text) {
