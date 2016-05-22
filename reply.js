@@ -6,6 +6,7 @@ var W = new Wolfram(config.wolfram_appid);
 
 exports.tweetEvent = function (eventMsg) {
   var replyto = eventMsg.in_reply_to_screen_name;
+  var replyid = eventMsg.in_reply_to_id;
   var text = eventMsg.text.replace(/@[\S]*/g, '').replace(/^\s+|\s+$/g, ''); //removing the @mention for wolfram query and stripping excess whitespace
   var username = eventMsg.user.screen_name;
 
@@ -14,21 +15,21 @@ exports.tweetEvent = function (eventMsg) {
     if (concerningWeather(text)) {
       if (replyto === app.T.screen_name) {
         getWeather(text, username, function(status){
-          sendTweet(tweetWithWeather + status);
+          sendTweet({status: tweetWithWeather + status, in_reply_to_status_id: replyid});
         });
       }
     } else {
-      deferredTweet(username);
+      deferredTweet(username, replyid);
     }
   }
 }
 
-function deferredTweet(username) {
+function deferredTweet(username, replyid) {
   var cities = config.majorcities;
   var len = cities.length;
   var city = cities[Math.floor(Math.random()*len)];
   var defer = '@' + username + ' thanks, but this tweet doesn\'t seem to concern weather. Try something like: \"What\'s the weather in ' + city + '?\"';
-  sendTweet(defer);
+  sendTweet({status: defer, in_reply_to_status_id: replyid});
 }
 
 function getWeather(query, username, callback) {
@@ -71,13 +72,10 @@ function wolframParser(str) {
 
 function concerningWeather(str) {
   //return str.match(/weather|forecast|tempurature|rain|snow|sunny/gi);
-  return str.match(/weather|forecast|temperature|rain|snow|sunny/gi);
+  return str.match(/weather|forecast|temperature|rain|snow|sun|drizzl|precipitation|cloud|hail|hail|hurricane|thunder/gi);
 }
 
-function sendTweet(text) {
-  var tweetObj = {
-    status: text
-  };
+function sendTweet(tweetObj) {
 
   app.T.post('statuses/update', tweetObj, function(err, data, response) {
     if (err) {
@@ -87,49 +85,3 @@ function sendTweet(text) {
     };
   });
 }
-
-/* Below is an implementation using OpenWeatherMap's API using zipcode lookup.
-exports.tweetEvent = function (eventMsg) {
-  var replyto = eventMsg.in_reply_to_screen_name;
-  var text = eventMsg.text;
-  var from = eventMsg.user.screen_name;
-  var zip = extractZip(text);
-  var tweetWithOutZip = '@' + from + ' thanks for tweeting me. Tweet me your zip and I\'ll reply with the weather!';
-  var tweetWithZip = '@' + from;
-  if (from != app.T.screen_name) {
-    if (zip) {
-      if (replyto === app.T.screen_name) {
-        getWeather(zip, function(status){
-          sendTweet(tweetWithZip + status);
-          sendTweet(tweetWithZip + " More here: " + "https://weather.com/weather/today/l/" + zip + ":4:US");
-        });
-      }
-    } else {
-      sendTweet(tweetWithOutZip);
-    }
-  }
-}
-
-function getWeather(zip, callback) {
-  var weather_url = "http://api.openweathermap.org/data/2.5/weather?units=imperial&APPID=" + config.openweathermap_API_KEY + "&zip="+ zip + ",us";
-  request(weather_url, function (err, response, body) {
-    if (err) {
-      console.log("Error getting weather for " + zip, err);
-      return
-    } else {
-      var weather = JSON.parse(body);
-      var status = " The forecast for " + weather.name +
-          " today is " + weather.weather[0].main.toLowerCase() +
-          ". High " + Math.round(weather.main.temp_max) + "° Low " + Math.round(weather.main.temp_min) +
-          "°" + " Wind speed " + Math.round(weather.wind.speed) + " mph." + " Humidity " + weather.main.humidity +"%.";
-      callback(status);
-      console.log(status);
-    }
-  });
-}
-
-function extractZip(str) {
-  var re = /\d{5}/g;
-  return re.exec(str);
-}
-*/
