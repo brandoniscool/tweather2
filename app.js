@@ -3,7 +3,7 @@ var Wolfram = require('node-wolfram');
 var Retweet = require('./retweet');
 var Mention = require('./mention');
 var Reply = require('./reply');
-var config = require('./config');
+var config = require('./config2');
 
 var T = new Twit(config);
 var W = new Wolfram(config.wolfram_appid);
@@ -40,7 +40,7 @@ T.get('account/verify_credentials', { skip_status: true })
 
     // Opening up streaming connection to Twitter
     // dev.twitter.com/streaming/overview
-    var stream = T.stream('user');
+    var stream = T.stream('statuses/filter', { track: T.screen_name });
 
     //Emitted when a connection attempt is made to Twitter. The http request object is emitted.
     stream.on('connect', function (request) {
@@ -53,14 +53,21 @@ T.get('account/verify_credentials', { skip_status: true })
     });
 
     // Emitted each time a status (tweet) comes into the stream.
-    stream.on('tweet', Reply.tweetEvent);
+    stream.on('tweet', Reply.TweetEvent);
 
     // Emitted when an API request or response error occurs.
     // stream.on('error', function (res) {
     // });
   });
 
-
+exports.randIndex = function(arr) {
+  var index = Math.floor(arr.length*Math.random());
+  return arr[index];
+};
+exports.handleError = function(err) {
+  console.error('response status:', err.statusCode);
+  console.error('data:', err.data);
+}
 //Making this variable accessible to our other libraries
 exports.T = T;
 exports.W = W;

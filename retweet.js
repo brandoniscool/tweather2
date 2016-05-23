@@ -5,10 +5,9 @@ var request = require('request');
 //This is our array of twitter accounts that we're randomly sampling from.
 
 exports.sampleAccounts = function() {
-  var weatherAccounts = config.waccounts;
-  var len = weatherAccounts.length;
+  var randWeatherAccount = app.randIndex(config.waccounts);
   var userObj = {
-    screen_name: weatherAccounts[Math.floor(Math.random()*len)], //choosing random index
+    screen_name: randWeatherAccount, //choosing random index
     count: 1 //we only need one tweet
   }
   return userObj;

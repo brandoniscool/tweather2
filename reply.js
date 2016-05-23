@@ -2,11 +2,10 @@ var app = require('./app');
 var config = require('./config');
 var request = require('request');
 var Wolfram = require('node-wolfram');
-var W = new Wolfram(config.wolfram_appid);
 
-exports.tweetEvent = function (eventMsg) {
-  var replyto = eventMsg.in_reply_to_screen_name;
-  var replyid = eventMsg.in_reply_to_id;
+exports.TweetEvent = function (eventMsg) {
+  var replyto = eventMsg.user.screen_name;
+  var replyid = eventMsg.id_str;
   var query = eventMsg.text.replace(/@[\S]*/g, '').replace(/^\s+|\s+$/g, ''); //removing the @mention for wolfram query and stripping excess whitespace
 
   var tweetWithWeather = '@' + replyto + " ";
@@ -23,7 +22,7 @@ exports.tweetEvent = function (eventMsg) {
 
 function getWeather(query, eventMsg, callback) {
   console.log(query);
-  W.query(query, function(err, result) {
+  app.W.query(query, function(err, result) {
   	if(err) {
       console.log(err);
     } else {
@@ -32,7 +31,7 @@ function getWeather(query, eventMsg, callback) {
         var status = wolframParser(str);
         callback(status);
       } else {
-        deferredTweet(eventMsg.in_reply_to_screen_name, eventMsg.in_reply_to_id);
+        deferredTweet(eventMsg.user.screen_name, eventMsg.id_str);
         return
       }
     }
@@ -40,11 +39,9 @@ function getWeather(query, eventMsg, callback) {
 }
 
 function deferredTweet(replyto, replyid) {
-  var cities = config.majorcities;
-  var len = cities.length;
-  var city = cities[Math.floor(Math.random()*len)];
-  var defer = '@' + replyto + ' thanks, but this tweet doesn\'t seem to concern weather. Try something like: \"What\'s the weather in ' + city + '?\"';
-  sendTweet({status: defer, in_reply_to_status_id: replyid});
+  var city = app.randIndex(config.majorcities);
+  var deferText = '@' + replyto + ' thanks, but this tweet doesn\'t seem to concern weather. Try something like: \"What\'s the weather in ' + city + '?\"';
+  sendTweet({status: deferText, in_reply_to_status_id: replyid});
 }
 
 function wolframParser(str) {
@@ -68,12 +65,10 @@ function wolframParser(str) {
 }
 
 function concerningWeather(str) {
-  //return str.match(/weather|forecast|tempurature|rain|snow|sunny/gi);
   return str.match(/weather|forecast|temperature|rain|snow|sun|drizzl|precipitation|cloud|hail|hail|hurricane|thunder/gi);
 }
 
 function sendTweet(tweetObj) {
-
   app.T.post('statuses/update', tweetObj, function(err, data, response) {
     if (err) {
       console.log(err);
