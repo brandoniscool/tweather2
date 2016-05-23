@@ -3,7 +3,7 @@ var Wolfram = require('node-wolfram');
 var Retweet = require('./retweet');
 var Mention = require('./mention');
 var Reply = require('./reply');
-var config = require('./config2');
+var config = require('./config');
 
 var T = new Twit(config);
 var W = new Wolfram(config.wolfram_appid);
