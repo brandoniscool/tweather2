@@ -20,6 +20,7 @@ exports.TweetEvent = function (eventMsg) {
   }
 }
 
+
 function getWeather(query, eventMsg, callback) {
   console.log(query);
   app.W.query(query, function(err, result) {

@@ -7,6 +7,7 @@ var request = require('request');
 exports.tweetMention = function(tweetObj) {
   var randCity = app.randIndex(config.majorcities);
   var mention = '@' + tweetObj.username + ' hey! I can give you weather information. Tweet me something like: \"What\'s the weather in ' + randCity + '?\"';
+  tweetObj.status = mention;
   app.T.post('statuses/update', tweetObj, function (err, data, response) {
     if (err) {
       console.log(err);

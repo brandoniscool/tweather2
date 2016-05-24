@@ -34,7 +34,7 @@ T.get('account/verify_credentials', { skip_status: true })
 
     setInterval(function () {
       T.get('search/tweets', {q: 'weather', count: 1}, function(err, data, response) {
-        Mention.tweetMention({status: data.statuses[0].in_reply_to_screen_name, username: data.statuses[0].user.screen_name, in_reply_to_status_id: data.statuses[0].in_reply_to_status_id});
+        Mention.tweetMention({username: data.statuses[0].user.screen_name, in_reply_to_status_id: data.statuses[0].in_reply_to_status_id});
       });
     }, 100000*200); //This line determines interval time, in miliseconds.
 
