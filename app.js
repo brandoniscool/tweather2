@@ -35,7 +35,7 @@ T.get('account/verify_credentials', { skip_status: true })
 
     //This is the core of our systematic retweeting.
     setInterval(function () {
-      app.T.get('search/tweets', {q: 'weather', count: 5}, function(err, data, response) {
+      T.get('search/tweets', {q: 'weather', count: 5}, function(err, data, response) {
         if (err) {
           console.log(err);
         } else {
