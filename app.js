@@ -3,6 +3,7 @@ var Wolfram = require('node-wolfram');
 var Retweet = require('./retweet');
 var Mention = require('./mention');
 var Reply = require('./reply');
+var Like = require('./like');
 var config = require('./config');
 
 var T = new Twit(config);
@@ -32,11 +33,23 @@ T.get('account/verify_credentials', { skip_status: true })
       });
     }, 100000*180); //This line determines interval time, in miliseconds.
 
+    //This is the core of our systematic retweeting.
+    setInterval(function () {
+      app.T.get('search/tweets', {q: 'weather', count: 5}, function(err, data, response) {
+        if(err) {
+          console.log(err);
+        } else {
+          Like.tweetLike(data);
+        }
+    }, 100000*50); //This line determines interval time, in miliseconds.
+
     setInterval(function () {
       T.get('search/tweets', {q: 'weather', count: 1}, function(err, data, response) {
-        Mention.tweetMention({username: data.statuses[0].user.screen_name, in_reply_to_status_id: data.statuses[0].in_reply_to_status_id});
+        if (data.statuses[0].user) {
+          Mention.tweetMention({username: data.statuses[0].user.screen_name, in_reply_to_status_id: data.statuses[0].in_reply_to_status_id});
+        }
       });
-    }, 100000*200); //This line determines interval time, in miliseconds.
+    }, 100000*500); //This line determines interval time, in miliseconds.
 
     // Opening up streaming connection to Twitter
     // dev.twitter.com/streaming/overview
