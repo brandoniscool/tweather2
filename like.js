@@ -16,5 +16,4 @@ exports.tweetLike = function(data) {
         }
       });
     }
-  });
 }
